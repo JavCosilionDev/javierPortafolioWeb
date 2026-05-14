@@ -50,24 +50,24 @@
     <nav id="main-nav" role="navigation" aria-label="Navegacion principal">
 
         {{-- Logo / Monograma --}}
-        <div class="nav__logo" onclick="goToPage(0)" aria-label="Ir al inicio">
+        <div class="nav__logo" aria-label="Ir al inicio">
             {{ strtoupper(substr($developerData['name'], 0, 1)) }}.{{ strtoupper(substr($developerData['lastname'], 0, 1)) }}
         </div>
 
         {{-- Links de navegacion desktop --}}
         <ul class="nav__links" role="list">
             <li>
-                <span class="nav__link active" onclick="goToPage(0)" data-page="0" role="button" tabindex="0">
+                <span class="nav__link active" data-page="0" role="button" tabindex="0">
                     {{ __('portfolio.nav.home') }}
                 </span>
             </li>
             <li>
-                <span class="nav__link" onclick="goToPage(1)" data-page="1" role="button" tabindex="0">
+                <span class="nav__link" data-page="1" role="button" tabindex="0">
                     {{ __('portfolio.nav.projects') }}
                 </span>
             </li>
             <li>
-                <span class="nav__link" onclick="goToPage(2)" data-page="2" role="button" tabindex="0">
+                <span class="nav__link" data-page="2" role="button" tabindex="0">
                     {{ __('portfolio.nav.contact') }}
                 </span>
             </li>
@@ -116,13 +116,13 @@
                class="{{ app()->getLocale() === 'en' ? 'active' : '' }}">EN</a>
         </div>
 
-        <span class="nav__mobile-link" onclick="goToPage(0); closeMobileMenu();">
+        <span class="nav__mobile-link">
             {{ __('portfolio.nav.home') }}
         </span>
-        <span class="nav__mobile-link" onclick="goToPage(1); closeMobileMenu();">
+        <span class="nav__mobile-link">
             {{ __('portfolio.nav.projects') }}
         </span>
-        <span class="nav__mobile-link" onclick="goToPage(2); closeMobileMenu();">
+        <span class="nav__mobile-link">
             {{ __('portfolio.nav.contact') }}
         </span>
     </div>
@@ -165,11 +165,11 @@
                                 </div>
                                 <p class="hero__summary anim-ready">{{ __('portfolio.hero.summary') }}</p>
                                 <div class="hero__ctas anim-ready">
-                                    <button class="btn btn--primary" onclick="goToPage(1)" aria-label="{{ __('portfolio.hero.cta_projects') }}">
+                                    <button class="btn btn--primary" aria-label="{{ __('portfolio.hero.cta_projects') }}">
                                         <i class="bx bx-grid-alt" aria-hidden="true"></i>
                                         {{ __('portfolio.hero.cta_projects') }}
                                     </button>
-                                    <button class="btn btn--outline" onclick="goToPage(2)" aria-label="{{ __('portfolio.hero.cta_contact') }}">
+                                    <button class="btn btn--outline" aria-label="{{ __('portfolio.hero.cta_contact') }}">
                                         <i class="bx bx-envelope" aria-hidden="true"></i>
                                         {{ __('portfolio.hero.cta_contact') }}
                                     </button>
@@ -855,11 +855,11 @@
 
     {{-- Indicadores de pagina (puntos) --}}
     <nav class="page-dots" role="tablist" aria-label="Navegacion de paginas">
-        <button class="page-dot active" onclick="goToPage(0)"
+        <button class="page-dot active"
                 role="tab" aria-selected="true" aria-label="{{ __('portfolio.nav.home') }}"></button>
-        <button class="page-dot" onclick="goToPage(1)"
+        <button class="page-dot"
                 role="tab" aria-selected="false" aria-label="{{ __('portfolio.nav.projects') }}"></button>
-        <button class="page-dot" onclick="goToPage(2)"
+        <button class="page-dot"
                 role="tab" aria-selected="false" aria-label="{{ __('portfolio.nav.contact') }}"></button>
     </nav>
 
