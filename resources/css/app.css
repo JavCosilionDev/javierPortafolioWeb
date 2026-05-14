@@ -1,11 +1,1599 @@
-@import 'tailwindcss';
+/*
+ * app.css — Estilos del Portafolio
+ *
+ * Compilado por Vite. En el Blade se carga con: @vite(['resources/css/app.css'])
+ *
+ * Índice de secciones:
+ *  1.  Variables CSS (design tokens)
+ *  2.  Reset y base
+ *  3.  Preloader
+ *  4.  Layout principal (scroll horizontal)
+ *  5.  Navegación principal
+ *  6.  Flechas y puntos de navegación
+ *  7.  Página 0 — Bienvenida / Hero
+ *  8.  Sección de tecnologías
+ *  9.  Sección de herramientas
+ * 10.  Formación académica
+ * 11.  Experiencia — Timeline compacto
+ * 12.  Página 1 — Proyectos
+ * 13.  Plantilla 1: Featured card
+ * 14.  Plantilla 2: Card normal (grid)
+ * 15.  Plantilla 3: Timeline card
+ * 16.  Página 2 — Contacto
+ * 17.  Footer
+ * 18.  Menú móvil
+ * 19.  Responsive — Tablets y móviles
+ * 20.  Utilidades
+ */
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+/* =============================================================
+   1. VARIABLES CSS — Sistema de diseño centralizado
+   Cambiar estos valores ajusta el tema completo sin tocar
+   ningún otro selector.
+   ============================================================= */
+:root {
+    /* Paleta de colores — tema oscuro con acento dorado-ámbar */
+    --color-bg:           #0a0a0f;
+    --color-bg-alt:       #111118;
+    --color-bg-card:      #16161e;
+    --color-bg-glass:     rgba(22, 22, 30, 0.80);
+    --color-border:       rgba(255, 255, 255, 0.07);
+    --color-border-hover:rgba(255, 80, 80, 0.35);
+
+    /* Colores de acento - dorado ambar */
+    --color-accent:      #dc3545;
+    --color-accent-dim:  rgba(245, 35, 35, 0.15);
+    --color-accent-glow: rgba(245, 35, 35, 0.3);
+
+    /* Texto */
+    --color-text:         #e8e8f0;
+    --color-text-muted:   #8888a0;
+    --color-text-faint:   #55556a;
+
+    /* Indicadores de nivel de habilidad */
+    --color-advanced:     #4ade80;
+    --color-intermediate: #60a5fa;
+    --color-basic:        #a78bfa;
+
+    /* Estado de proyectos */
+    --color-prod:         #4ade80;
+    --color-personal:     #f5a623;
+    --color-completed:    #60a5fa;
+
+    /* Tipografía */
+    --font-display: 'Syne', sans-serif;
+    --font-body:    'DM Sans', sans-serif;
+
+    /* Escala de tamaños de fuente */
+    --text-xs:   0.75rem;
+    --text-sm:   0.875rem;
+    --text-base: 1rem;
+    --text-lg:   1.125rem;
+    --text-xl:   1.25rem;
+    --text-2xl:  1.5rem;
+    --text-3xl:  2rem;
+    --text-4xl:  2.75rem;
+    --text-5xl:  3.75rem;
+
+    /* Espaciado — escala de 8 px */
+    --space-1:  0.25rem;
+    --space-2:  0.5rem;
+    --space-3:  0.75rem;
+    --space-4:  1rem;
+    --space-5:  1.25rem;
+    --space-6:  1.5rem;
+    --space-8:  2rem;
+    --space-10: 2.5rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+    --space-20: 5rem;
+
+    /* Bordes redondeados */
+    --radius-sm:   6px;
+    --radius-md:   12px;
+    --radius-lg:   20px;
+    --radius-full: 9999px;
+
+    /* Sombras */
+    --shadow-card:  0 4px 24px rgba(0, 0, 0, 0.40);
+    --shadow-glow:  0 0 40px rgba(245, 166, 35, 0.20);
+    --shadow-heavy: 0 8px 40px rgba(0, 0, 0, 0.60);
+
+    /* Transiciones */
+    --transition-fast: 150ms ease;
+    --transition-base: 250ms ease;
+    --transition-slow: 400ms ease;
+
+    /* Ancho máximo del contenido */
+    --max-width: 1200px;
+}
+
+
+/* =============================================================
+   2. RESET Y BASE
+   ============================================================= */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+/*
+ * Clase aplicada al <html> mientras el preloader está activo.
+ * Impide el scroll del body durante la carga inicial.
+ */
+html.no-scroll,
+html.no-scroll body {
+    overflow: hidden;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow: hidden; /* Solo scroll horizontal entre páginas */
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font-family: var(--font-body);
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+
+/* =============================================================
+   3. PRELOADER
+   Pantalla de carga inicial; anime.js maneja las animaciones.
+   ============================================================= */
+#preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background-color: var(--color-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-8);
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* Monograma grande centrado */
+.preloader__monogram {
+    font-family: var(--font-display);
+    font-size: var(--text-5xl);
+    font-weight: 800;
+    color: var(--color-accent);
+    letter-spacing: -2px;
+    opacity: 0; /* anime.js lo revela */
+}
+
+/* Barra de progreso */
+.preloader__bar-wrap {
+    width: 200px;
+    height: 2px;
+    background: var(--color-border);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.preloader__bar {
+    height: 100%;
+    width: 0%; /* anime.js la expande a 100% */
+    background: var(--color-accent);
+    border-radius: var(--radius-full);
+}
+
+/* Texto "Cargando..." */
+.preloader__text {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0; /* anime.js lo revela */
+}
+
+
+/* =============================================================
+   4. LAYOUT PRINCIPAL — Scroll horizontal
+   #pages-track se desplaza con translateX via anime.js.
+   Cada .page ocupa exactamente 100vw × 100vh.
+   ============================================================= */
+#app {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+#pages-track {
+    display: flex;
+    width: max-content;
+    height: 100vh;
+    will-change: transform; /* Optimización de GPU */
+}
+
+.page {
+    width: 100vw;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex-shrink: 0;
+    /* Scrollbar sutil para scroll vertical dentro de cada página */
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-accent-dim) transparent;
+}
+
+.page::-webkit-scrollbar        { width: 4px; }
+.page::-webkit-scrollbar-track  { background: transparent; }
+.page::-webkit-scrollbar-thumb  {
+    background: var(--color-accent-dim);
+    border-radius: var(--radius-full);
+}
+
+
+/* =============================================================
+   5. NAVEGACIÓN PRINCIPAL
+   Barra fija en la parte superior, visible en todas las páginas.
+   ============================================================= */
+#main-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: var(--space-5) var(--space-8);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(10, 10, 15, 0.85);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--color-border);
+    transition: transform var(--transition-slow);
+}
+
+/* Monograma / Logo */
+.nav__logo {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 800;
+    color: var(--color-accent);
+    letter-spacing: -0.5px;
+    cursor: pointer;
+    transition: opacity var(--transition-base);
+}
+
+.nav__logo:hover { opacity: 0.8; }
+
+/* Lista de links */
+.nav__links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+    list-style: none;
+}
+
+.nav__link {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text-muted);
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    padding: var(--space-2) 0;
+    position: relative;
+    transition: color var(--transition-base);
+}
+
+/* Subrayado animado al hacer hover o al estar activo */
+.nav__link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--color-accent);
+    transition: width var(--transition-base);
+}
+
+.nav__link:hover,
+.nav__link.active               { color: var(--color-text); }
+
+.nav__link:hover::after,
+.nav__link.active::after        { width: 100%; }
+
+/* Selector de idioma */
+.nav__lang {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+
+.nav__lang a {
+    display: block;
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    transition: color var(--transition-base), background var(--transition-base);
+}
+
+.nav__lang a.active {
+    color: var(--color-bg);
+    background: var(--color-accent);
+}
+
+.nav__lang a:not(.active):hover { color: var(--color-text); }
+
+/* Separador visual entre ES / EN */
+.nav__lang-sep {
+    width: 1px;
+    height: 20px;
+    background: var(--color-border);
+}
+
+/* Botón hamburguesa — visible solo en móvil */
+.nav__hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    padding: var(--space-2);
+    cursor: pointer;
+}
+
+.nav__hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--color-text);
+    border-radius: var(--radius-full);
+    transition: transform var(--transition-base), opacity var(--transition-base);
+}
+
+
+/* =============================================================
+   6. FLECHAS Y PUNTOS DE NAVEGACIÓN HORIZONTAL
+   ============================================================= */
+.nav-arrow {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 200;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-full);
+    background: var(--color-bg-glass);
+    border: 1px solid var(--color-border);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition:
+        background var(--transition-base),
+        border-color var(--transition-base),
+        transform var(--transition-base),
+        opacity var(--transition-base);
+    color: var(--color-text-muted);
+    font-size: var(--text-xl);
+}
+
+.nav-arrow:hover {
+    background: var(--color-accent-dim);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.nav-arrow:disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+    transform: translateY(-50%) scale(1);
+}
+
+.nav-arrow--prev { left:  var(--space-6); }
+.nav-arrow--next { right: var(--space-6); }
+
+/* Puntos indicadores de página */
+.page-dots {
+    position: fixed;
+    bottom: var(--space-8);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 200;
+    display: flex;
+    gap: var(--space-3);
+    align-items: center;
+}
+
+.page-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+    background: var(--color-text-faint);
+    cursor: pointer;
+    transition:
+        background var(--transition-base),
+        width var(--transition-base);
+}
+
+/* El punto activo se expande para indicar la página actual */
+.page-dot.active {
+    background: var(--color-accent);
+    width: 24px;
+}
+
+
+/* =============================================================
+   7. PÁGINA 0 — BIENVENIDA / HERO
+   ============================================================= */
+#page-home {
+    background: var(--color-bg);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Gradiente decorativo superior-derecha */
+#page-home::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(245, 166, 35, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Gradiente decorativo inferior-izquierda */
+#page-home::after {
+    content: '';
+    position: absolute;
+    bottom: -20%;
+    left: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(96, 165, 250, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.home__scroll-container {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    padding-top: 80px; /* Compensa la barra de navegación fija */
+    position: relative;
+    z-index: 1;
+}
+
+.home__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--space-16) var(--space-8) var(--space-20);
+}
+
+/* Grid principal del hero: contenido izquierdo + card derecha */
+.hero__intro {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-12);
+    align-items: start;
+    margin-bottom: var(--space-16);
+}
+
+.hero__greeting {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: var(--space-4);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+/* Línea decorativa antes del saludo */
+.hero__greeting::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--color-accent);
+}
+
+.hero__name {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800;
+    color: var(--color-text);
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: var(--space-4);
+}
+
+.hero__name span { color: var(--color-accent); }
+
+.hero__title {
+    font-size: var(--text-xl);
+    color: var(--color-text-muted);
+    font-weight: 400;
+    margin-bottom: var(--space-6);
+}
+
+.hero__badges {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-8);
+}
+
+/* Badge genérico */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background: var(--color-accent-dim);
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-full);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--color-accent);
+    letter-spacing: 0.5px;
+}
+
+.badge--neutral {
+    background: var(--color-bg-card);
+    border-color: var(--color-border);
+    color: var(--color-text-muted);
+}
+
+.hero__summary {
+    font-size: var(--text-base);
+    color: var(--color-text-muted);
+    line-height: 1.8;
+    max-width: 600px;
+    margin-bottom: var(--space-10);
+}
+
+/* Botones de acción principales */
+.hero__ctas {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+}
+
+/* Base del botón reutilizable en todo el portafolio */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-6);
+    border-radius: var(--radius-sm);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition:
+        background var(--transition-base),
+        color var(--transition-base),
+        transform var(--transition-fast),
+        box-shadow var(--transition-base);
+}
+
+.btn:active { transform: translateY(1px); }
+
+.btn--primary {
+    background: var(--color-accent);
+    color: var(--color-bg);
+    border: 1px solid var(--color-accent);
+}
+
+.btn--primary:hover {
+    background: transparent;
+    color: var(--color-accent);
+    box-shadow: var(--shadow-glow);
+}
+
+.btn--outline {
+    background: transparent;
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border);
+}
+
+.btn--outline:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+/* Botón pequeño (usado en tarjetas de proyectos) */
+.btn--sm {
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--text-xs);
+}
+
+/* Card lateral del hero con avatar y estado */
+.hero__card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    min-width: 200px;
+    text-align: center;
+}
+
+.hero__avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--radius-full);
+    background: var(--color-accent-dim);
+    border: 2px solid var(--color-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 800;
+    color: var(--color-accent);
+    margin: 0 auto var(--space-4);
+}
+
+/* Indicador de disponibilidad con punto pulsante */
+.hero__status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    font-size: var(--text-xs);
+    color: var(--color-advanced);
+    font-weight: 500;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: var(--radius-full);
+    background: var(--color-advanced);
+    animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* Contenedor genérico de sección */
+.section {
+    margin-bottom: var(--space-16);
+}
+
+.section__header {
+    margin-bottom: var(--space-8);
+}
+
+/* Etiqueta pequeña sobre el título de sección */
+.section__label {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--color-accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: var(--space-3);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+/* Línea decorativa después de la etiqueta */
+.section__label::after {
+    content: '';
+    flex: 1;
+    max-width: 40px;
+    height: 1px;
+    background: var(--color-accent);
+}
+
+.section__title {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--color-text);
+    letter-spacing: -1px;
+}
+
+.section__subtitle {
+    font-size: var(--text-base);
+    color: var(--color-text-muted);
+    margin-top: var(--space-2);
+}
+
+/* Grid de dos columnas para formación + experiencia */
+.two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-12);
+}
+
+
+/* =============================================================
+   8. SECCIÓN DE TECNOLOGÍAS
+   ============================================================= */
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: var(--space-3);
+}
+
+.tech-item {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-4) var(--space-3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    text-align: center;
+    transition:
+        border-color var(--transition-base),
+        transform var(--transition-base),
+        background var(--transition-base);
+    cursor: default;
+}
+
+.tech-item:hover {
+    border-color: var(--color-border-hover);
+    background: var(--color-bg-alt);
+    transform: translateY(-3px);
+}
+
+.tech-item i        { font-size: 2rem; }
+
+.tech-item__name {
+    font-size: var(--text-xs);
+    font-weight: 500;
+    color: var(--color-text-muted);
+}
+
+.tech-item__level {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+}
+
+.tech-item__level--advanced     { color: var(--color-advanced);     background: rgba(74,  222, 128, 0.10); }
+.tech-item__level--intermediate { color: var(--color-intermediate); background: rgba(96,  165, 250, 0.10); }
+.tech-item__level--basic        { color: var(--color-basic);        background: rgba(167, 139, 250, 0.10); }
+
+
+/* =============================================================
+   9. SECCIÓN DE HERRAMIENTAS
+   ============================================================= */
+.tools-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+}
+
+.tool-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    transition: border-color var(--transition-base), color var(--transition-base);
+}
+
+.tool-chip:hover {
+    border-color: var(--color-border-hover);
+    color: var(--color-text);
+}
+
+.tool-chip i { font-size: var(--text-lg); }
+
+
+/* =============================================================
+   10. FORMACIÓN ACADÉMICA
+   ============================================================= */
+.education-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    display: flex;
+    gap: var(--space-6);
+    align-items: flex-start;
+    transition: border-color var(--transition-base);
+}
+
+.education-card:hover { border-color: var(--color-border-hover); }
+
+.education-card__icon {
+    width: 52px;
+    height: 52px;
+    background: var(--color-accent-dim);
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent);
+    font-size: var(--text-2xl);
+    flex-shrink: 0;
+}
+
+.education-card__degree {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--space-2);
+}
+
+.education-card__institution {
+    font-size: var(--text-base);
+    color: var(--color-accent);
+    margin-bottom: var(--space-2);
+}
+
+.education-card__meta {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+
+/* =============================================================
+   11. EXPERIENCIA — TIMELINE COMPACTO
+   ============================================================= */
+.experience-timeline {
+    position: relative;
+    padding-left: var(--space-8);
+}
+
+/* Línea vertical de la timeline */
+.experience-timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: var(--color-border);
+}
+
+.exp-item {
+    position: relative;
+    padding-bottom: var(--space-8);
+}
+
+/* Punto indicador en la línea */
+.exp-item::before {
+    content: '';
+    position: absolute;
+    left: calc(-2rem - 4px);
+    top: 8px;
+    width: 9px;
+    height: 9px;
+    border-radius: var(--radius-full);
+    background: var(--color-accent);
+    border: 2px solid var(--color-bg);
+    box-shadow: 0 0 0 2px var(--color-accent);
+}
+
+.exp-item:last-child { padding-bottom: 0; }
+
+.exp-item__period {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--color-accent);
+    letter-spacing: 0.5px;
+    margin-bottom: var(--space-1);
+}
+
+.exp-item__company {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.exp-item__role {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-2);
+}
+
+.exp-item__summary {
+    font-size: var(--text-sm);
+    color: var(--color-text-faint);
+    line-height: 1.7;
+}
+
+
+/* =============================================================
+   12. PÁGINA 1 — PROYECTOS
+   ============================================================= */
+#page-projects {
+    background: var(--color-bg-alt);
+}
+
+.projects__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: calc(80px + var(--space-12)) var(--space-8) var(--space-20);
+}
+
+/* Botones de filtro por categoría */
+.projects__filters {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-10);
+}
+
+.filter-btn {
+    padding: var(--space-2) var(--space-5);
+    border-radius: var(--radius-full);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text-muted);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    cursor: pointer;
+    transition:
+        background var(--transition-base),
+        color var(--transition-base),
+        border-color var(--transition-base);
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: var(--color-accent-dim);
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
+/*
+ * Grid principal de proyectos.
+ * Los proyectos tipo 'featured' usan grid-column: span 2
+ * para ocupar todo el ancho.
+ */
+.projects__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-6);
+}
+
+/* Tags de tecnología usados dentro de las tarjetas */
+.tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+.tech-tag {
+    padding: var(--space-1) var(--space-3);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+}
+
+/* Área de botones de acción de un proyecto */
+.project-actions {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    margin-top: var(--space-6);
+}
+
+/* Indicador de estado del proyecto (Producción / Personal / Completado) */
+.project-status {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-full);
+    font-size: var(--text-xs);
+    font-weight: 600;
+}
+
+.project-status--prod {
+    background: rgba(74,  222, 128, 0.10);
+    color: var(--color-prod);
+    border: 1px solid rgba(74, 222, 128, 0.25);
+}
+
+.project-status--personal {
+    background: rgba(245, 166, 35, 0.10);
+    color: var(--color-personal);
+    border: 1px solid rgba(245, 166, 35, 0.25);
+}
+
+.project-status--completed {
+    background: rgba(96, 165, 250, 0.10);
+    color: var(--color-completed);
+    border: 1px solid rgba(96, 165, 250, 0.25);
+}
+
+.project-status__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-full);
+    background: currentColor;
+}
+
+
+/* =============================================================
+   13. PLANTILLA 1: FEATURED CARD (tarjeta grande destacada)
+   Ocupa dos columnas del grid con un borde izquierdo de acento.
+   ============================================================= */
+.project-featured {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-8);
+    align-items: start;
+    transition:
+        border-color var(--transition-base),
+        box-shadow var(--transition-base),
+        transform var(--transition-slow);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Acento vertical en el borde izquierdo */
+.project-featured::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--color-accent);
+    border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+}
+
+.project-featured:hover {
+    border-color: var(--color-border-hover);
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-4px);
+}
+
+.project-featured__tag {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--color-accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: var(--space-3);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.project-featured__title {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--color-text);
+    letter-spacing: -0.5px;
+    margin-bottom: var(--space-4);
+}
+
+.project-featured__desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: 1.8;
+    margin-bottom: var(--space-6);
+}
+
+/* Columna derecha de la tarjeta featured (estado, periodo, empresa) */
+.project-featured__meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--space-4);
+    min-width: 160px;
+}
+
+
+/* =============================================================
+   14. PLANTILLA 2: CARD NORMAL (grid)
+   Tarjeta estándar que ocupa una columna del grid.
+   ============================================================= */
+.project-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    transition:
+        border-color var(--transition-base),
+        transform var(--transition-slow);
+}
+
+.project-card:hover {
+    border-color: var(--color-border-hover);
+    transform: translateY(-4px);
+}
+
+.project-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.project-card__category {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--color-text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.project-card__title {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--color-text);
+    letter-spacing: -0.3px;
+}
+
+.project-card__desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    flex: 1; /* Ocupa el espacio disponible para igualar alturas */
+}
+
+
+/* =============================================================
+   15. PLANTILLA 3: TIMELINE CARD
+   Lista vertical de proyectos con línea izquierda de tiempo.
+   ============================================================= */
+
+/* Contenedor que ocupa todo el ancho del grid */
+.project-timeline-wrap {
+    grid-column: 1 / -1;
+}
+
+.timeline-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+    padding-left: var(--space-10);
+}
+
+/* Línea vertical degradada */
+.timeline-list::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 12px;
+    bottom: 12px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--color-accent), transparent);
+}
+
+.timeline-project {
+    position: relative;
+    padding: var(--space-5) var(--space-6);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-4);
+    transition: border-color var(--transition-base);
+}
+
+/* Punto indicador en la línea */
+.timeline-project::before {
+    content: '';
+    position: absolute;
+    left: calc(-2.5rem + 2px);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    border-radius: var(--radius-full);
+    background: var(--color-accent);
+    border: 2px solid var(--color-bg-alt);
+}
+
+.timeline-project:hover { border-color: var(--color-border-hover); }
+
+.timeline-project__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-2);
+}
+
+.timeline-project__title {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.timeline-project__period {
+    font-size: var(--text-xs);
+    color: var(--color-accent);
+    font-weight: 600;
+}
+
+.timeline-project__company {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-2);
+}
+
+.timeline-project__desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-faint);
+    line-height: 1.7;
+}
+
+
+/* =============================================================
+   16. PÁGINA 2 — CONTACTO
+   ============================================================= */
+#page-contact {
+    background: var(--color-bg);
+    position: relative;
+}
+
+/* Gradiente decorativo central */
+#page-contact::before {
+    content: '';
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(245, 166, 35, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.contact__inner {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: calc(80px + var(--space-16)) var(--space-8) var(--space-20);
+    position: relative;
+    z-index: 1;
+}
+
+/* Indicador de disponibilidad en la parte superior */
+.contact__available {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-5);
+    background: rgba(74, 222, 128, 0.08);
+    border: 1px solid rgba(74, 222, 128, 0.25);
+    border-radius: var(--radius-full);
+    font-size: var(--text-sm);
+    color: var(--color-advanced);
+    font-weight: 500;
+    margin-bottom: var(--space-8);
+}
+
+/* Grid de dos columnas para los datos de contacto */
+.contact__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    margin-top: var(--space-10);
+}
+
+/* Tarjeta individual de dato de contacto */
+.contact-item {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+    transition:
+        border-color var(--transition-base),
+        transform var(--transition-slow);
+}
+
+.contact-item:hover {
+    border-color: var(--color-border-hover);
+    transform: translateY(-3px);
+}
+
+/* Item que ocupa el ancho completo del grid */
+.contact-item--full { grid-column: 1 / -1; }
+
+.contact-item__icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    background: var(--color-accent-dim);
+    border: 1px solid var(--color-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent);
+    font-size: var(--text-xl);
+    flex-shrink: 0;
+}
+
+.contact-item__label {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--color-text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: var(--space-1);
+}
+
+.contact-item__value {
+    font-size: var(--text-base);
+    font-weight: 500;
+    color: var(--color-text);
+    word-break: break-all;
+}
+
+.contact-item__value a {
+    color: var(--color-accent);
+    transition: opacity var(--transition-base);
+}
+
+.contact-item__value a:hover { opacity: 0.7; }
+
+
+/* =============================================================
+   17. FOOTER
+   ============================================================= */
+.footer {
+    padding: var(--space-6) var(--space-8);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: var(--text-xs);
+    color: var(--color-text-faint);
+}
+
+.footer__heart {
+    color: #ef4444;
+    display: inline;
+}
+
+.footer__links {
+    display: flex;
+    gap: var(--space-4);
+}
+
+.footer__links a {
+    color: var(--color-text-faint);
+    font-size: var(--text-xl);
+    transition: color var(--transition-base), transform var(--transition-base);
+    display: inline-block;
+}
+
+.footer__links a:hover {
+    color: var(--color-accent);
+    transform: translateY(-2px);
+}
+
+
+/* =============================================================
+   18. MENÚ MÓVIL
+   Overlay full-screen accesible desde el botón hamburguesa.
+   ============================================================= */
+.nav__mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+    background: rgba(10, 10, 15, 0.97);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-8);
+}
+
+.nav__mobile-menu.open { display: flex; }
+
+.nav__mobile-link {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: color var(--transition-base);
+}
+
+.nav__mobile-link:hover { color: var(--color-accent); }
+
+.nav__mobile-close {
+    position: absolute;
+    top: var(--space-6);
+    right: var(--space-8);
+    font-size: var(--text-3xl);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    background: none;
+    border: none;
+    transition: color var(--transition-base);
+}
+
+.nav__mobile-close:hover { color: var(--color-text); }
+
+
+/* =============================================================
+   19. RESPONSIVE
+   Ajustes de layout para tablets y móviles.
+   Breakpoints: 1024px / 768px / 480px
+   ============================================================= */
+
+/* Tablets grandes */
+@media (max-width: 1024px) {
+    /* La featured card vuelve a una sola columna */
+    .project-featured {
+        grid-column: span 1;
+        grid-template-columns: 1fr;
+    }
+
+    .project-featured__meta {
+        align-items: flex-start;
+        flex-direction: row;
+        flex-wrap: wrap;
+        min-width: unset;
+    }
+
+    /* Las dos columnas de home se apilan */
+    .two-col {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Tablets pequeñas y móviles */
+@media (max-width: 768px) {
+    :root {
+        --text-5xl: 2.75rem;
+        --text-4xl: 2.25rem;
+        --text-3xl: 1.75rem;
+    }
+
+    /* Oculta links de nav en desktop, muestra hamburguesa */
+    .nav__links    { display: none; }
+    .nav__hamburger { display: flex; }
+    .nav__lang     { display: none; } /* El selector de idioma va dentro del menú móvil */
+
+    /* El hero pasa a una sola columna */
+    .hero__intro                 { grid-template-columns: 1fr; }
+    .hero__card                  { display: none; } /* Se oculta en móvil por espacio */
+
+    /* Grid de proyectos: una sola columna */
+    .projects__grid              { grid-template-columns: 1fr; }
+    .project-featured            { grid-column: span 1; }
+
+    /* Contacto: una sola columna */
+    .contact__grid               { grid-template-columns: 1fr; }
+
+    /* Flechas de navegación más pequeñas y más cerca del borde */
+    .nav-arrow                   { width: 40px; height: 40px; font-size: var(--text-base); }
+    .nav-arrow--prev             { left: var(--space-3); }
+    .nav-arrow--next             { right: var(--space-3); }
+
+    /* Padding interno más ajustado */
+    .home__inner,
+    .projects__inner,
+    .contact__inner {
+        padding-left: var(--space-5);
+        padding-right: var(--space-5);
+    }
+}
+
+/* Móviles pequeños */
+@media (max-width: 480px) {
+    :root { --text-5xl: 2.25rem; }
+
+    /* Botones apilados en móvil */
+    .hero__ctas    { flex-direction: column; }
+    .btn           { width: 100%; justify-content: center; }
+
+    /* Tecnologías en columnas más pequeñas */
+    .tech-grid     { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+
+    .page-dots     { bottom: var(--space-4); }
+
+    .footer {
+        flex-direction: column;
+        gap: var(--space-4);
+        text-align: center;
+    }
+}
+
+
+/* =============================================================
+   20. UTILIDADES
+   Clases de apoyo usadas desde el Blade o el JS.
+   ============================================================= */
+
+/* Oculta visualmente pero mantiene accesibilidad para lectores de pantalla */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+}
+
+/* Oculta proyectos que no coinciden con el filtro activo */
+.project-hidden { display: none !important; }
+
+/*
+ * Estado inicial de elementos animables.
+ * anime.js los revela con translateY(0) y opacity(1).
+ * Se elimina la clase una vez que la animación termina.
+ */
+.anim-ready {
+    opacity: 0;
+    transform: translateY(20px);
 }
