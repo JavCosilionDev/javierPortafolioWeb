@@ -436,22 +436,29 @@ function initArrowButtons() {
     });
 }
 
-// En lugar de onclick="goToPage(0)" en el HTML
-document.querySelector('.nav__logo').addEventListener('click', () => goToPage(0));
-
-// Para los nav links
-document.querySelectorAll('.nav__link').forEach((link) => {
-    link.addEventListener('click', function () {
-        goToPage(parseInt(this.dataset.page));
-        closeMobileMenu();
-    });
-});
-
 /* ================================================================
     9. INICIALIZACION
     Se ejecuta cuando el DOM esta completamente cargado
     ================================================================ */
 document.addEventListener('DOMContentLoaded', function() {
+
+    // En lugar de onclicks
+
+    document.querySelector('.nav__logo').addEventListener('click', () => goToPage(0));
+
+    document.querySelectorAll('.nav__link').forEach((link) => {
+        link.addEventListener('click', function () {
+            goToPage(parseInt(this.dataset.page));
+            closeMobileMenu();
+        });
+    });
+
+    document.querySelectorAll('.js-goto').forEach((btn) => {
+        btn.addEventListener('click', function () {
+            goToPage(parseInt(this.dataset.page));
+        });
+    });
+
     // Inicializa todos los modulos
     initProjectFilters();
     initMobileMenu();

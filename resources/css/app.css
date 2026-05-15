@@ -805,6 +805,18 @@ button {
 .tech-item__level--intermediate { color: var(--color-intermediate); background: rgba(96,  165, 250, 0.10); }
 .tech-item__level--basic        { color: var(--color-basic);        background: rgba(167, 139, 250, 0.10); }
 
+/*
+ * Etiqueta de grupo dentro de la seccion de tecnologias.
+ * Separa visualmente lenguajes, frameworks y bases de datos.
+ */
+.tech-group-label {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-4);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
 
 /* =============================================================
    9. SECCIÓN DE HERRAMIENTAS
