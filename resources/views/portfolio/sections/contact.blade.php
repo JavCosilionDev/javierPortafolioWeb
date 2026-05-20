@@ -26,7 +26,7 @@
         <div class="contact__grid" role="list" aria-label="{{ __('portfolio.contact.title') }}">
 
             {{-- Correo electronico --}}
-            <div class="contact-item anim-ready" role="listitem">
+            <div class="contact-item anim-ready" role="listitem" style="border: 1px solid #2e72fc;">
                 <div class="contact-item__icon" aria-hidden="true">
                     <i class="bx bx-envelope"></i>
                 </div>

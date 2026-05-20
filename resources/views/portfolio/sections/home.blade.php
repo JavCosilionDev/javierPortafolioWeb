@@ -21,11 +21,11 @@
                     <p class="hero__title anim-ready">{{ __('portfolio.hero.role') }}</p>
 
                     <div class="hero__badges anim-ready">
-                        <span class="badge">{{ $developerData['level'] }}</span>
+                        <span class="badge"><i class="bi bi-braces"></i> {{ $developerData['level'] }}</span>
                         <span class="badge badge--neutral">
                             <i class="bx bx-time-five" aria-hidden="true"></i>
                             +{{ $developerData['years_exp'] }}
-                            {{ app()->getLocale() === 'es' ? 'anos de exp.' : 'years exp.' }}
+                            {{ app()->getLocale() === 'es' ? 'años de exp.' : 'years exp.' }}
                         </span>
                         <span class="badge badge--neutral">
                             <i class="bx bx-map-pin" aria-hidden="true"></i>
@@ -81,29 +81,98 @@
                 ];
                 $languages = [
                     ['name' => 'PHP',        'icon' => 'devicon-php-plain colored',        'level' => 'advanced'],
-                    ['name' => 'JavaScript', 'icon' => 'devicon-javascript-plain colored', 'level' => 'intermediate'],
+                    ['name' => 'C#',         'icon' => 'devicon-csharp-plain colored',     'level' => 'intermediate'],
+                    ['name' => 'JavaScript', 'icon' => 'devicon-javascript-plain colored', 'level' => 'advanced'],
                     ['name' => 'Python',     'icon' => 'devicon-python-plain colored',     'level' => 'intermediate'],
                     ['name' => 'Dart',       'icon' => 'devicon-dart-plain colored',       'level' => 'intermediate'],
-                    ['name' => 'TypeScript', 'icon' => 'devicon-typescript-plain colored', 'level' => 'basic'],
+                    ['name' => 'TypeScript', 'icon' => 'devicon-typescript-plain colored', 'level' => 'intermediate'],
+                    ['name' => 'Swift',       'icon' => 'devicon-swift-plain colored',        'level' => 'basic'],
+                    ['name' => 'kotlin',       'icon' => 'devicon-kotlin-plain colored',        'level' => 'basic'],
+                    ['name' => 'Java',       'icon' => 'devicon-java-plain colored',        'level' => 'basic'],
+                    ['name' => 'C++',         'icon' => 'devicon-cplusplus-plain colored',     'level' => 'intermediate'],
+                    ['name' => 'GDScript',  'icon' => 'devicon-godot-plain colored',       'level' => 'basic'],
+                ];
+
+                $web = [
                     ['name' => 'HTML5',      'icon' => 'devicon-html5-plain colored',      'level' => 'advanced'],
                     ['name' => 'CSS3',       'icon' => 'devicon-css3-plain colored',       'level' => 'advanced'],
-                    ['name' => 'C#',         'icon' => 'devicon-csharp-plain colored',     'level' => 'intermediate'],
-                    ['name' => 'C++',        'icon' => 'devicon-cplusplus-plain colored',  'level' => 'intermediate'],
-                ];
-                $frameworks = [
-                    ['name' => 'Laravel',   'icon' => 'devicon-laravel-plain colored',    'level' => 'intermediate'],
-                    ['name' => 'Flutter',   'icon' => 'devicon-flutter-plain colored',    'level' => 'intermediate'],
-                    ['name' => 'Django',    'icon' => 'devicon-django-plain colored',     'level' => 'basic'],
-                    ['name' => 'Bootstrap', 'icon' => 'devicon-bootstrap-plain colored',  'level' => 'advanced'],
+                    ['name' => 'ViteJS',      'icon' => 'devicon-vitejs-plain colored',     'level' => 'basic'],
                     ['name' => 'jQuery',    'icon' => 'devicon-jquery-plain colored',     'level' => 'intermediate'],
-                    ['name' => 'NestJS',    'icon' => 'devicon-nestjs-plain colored',     'level' => 'basic'],
-                    ['name' => '.NET',      'icon' => 'devicon-dot-net-plain colored',    'level' => 'intermediate'],
-                    ['name' => 'Angular',   'icon' => 'devicon-angularjs-plain colored',  'level' => 'basic'],
                 ];
+
+                $runEnvironments = [
+                    ['name' => 'Node.js',       'icon' => 'devicon-nodejs-plain-wordmark colored',        'level' => 'intermediate'],
+                    ['name' => '.NET (CLR)',       'icon' => 'devicon-dotnet-plain',        'level' => 'intermediate'],
+                ];
+
+                $frameworks = [
+                    ['name' => 'Laravel',   'icon' => 'devicon-laravel-plain colored',    'level' => 'advanced'],
+                    ['name' => 'Angular',   'icon' => 'devicon-angularjs-plain colored',  'level' => 'intermediate'],
+                    ['name' => 'Flutter',   'icon' => 'devicon-flutter-plain colored',    'level' => 'intermediate'],
+                    ['name' => 'ASP.NET Core',  'icon' => 'devicon-dotnetcore-plain colored',  'level' => 'intermediate'],
+                    ['name' => 'NestJS',    'icon' => 'devicon-nestjs-plain colored',     'level' => 'intermediate'],
+                    ['name' => 'ExpressJS',    'icon' => 'devicon-express-original',     'level' => 'intermediate'],
+                    ['name' => 'CodeIgniter',  'icon' => 'devicon-codeigniter-plain colored',  'level' => 'basic'],
+                    ['name' => 'Django',    'icon' => 'devicon-django-plain',     'level' => 'basic'],
+
+                    ['name' => 'Bootstrap', 'icon' => 'devicon-bootstrap-plain colored',  'level' => 'advanced'],
+                    ['name' => 'TailWind CSS',  'icon' => 'devicon-tailwindcss-original colored',  'level' => 'basic'],
+
+                ];
+
                 $databases = [
                     ['name' => 'MySQL',      'icon' => 'devicon-mysql-plain colored',      'level' => 'advanced'],
                     ['name' => 'PostgreSQL', 'icon' => 'devicon-postgresql-plain colored', 'level' => 'intermediate'],
                     ['name' => 'TypeORM',    'icon' => 'devicon-sequelize-plain colored',  'level' => 'intermediate'],
+                    ['name' => 'SQLite',     'icon' => 'devicon-sqlite-plain colored',     'level' => 'intermediate'],
+                    ['name' => 'MongoDB',    'icon' => 'devicon-mongodb-plain colored',     'level' => 'intermediate'],
+                ];
+
+                $devTools = [
+
+                    ['name' => 'Git',        'icon' => 'devicon-git-plain colored',        'level' => 'advanced'],
+                    ['name' => 'GitHub',     'icon' => 'devicon-github-original',     'level' => 'advanced'],
+                    ['name' => 'Bitbucket',  'icon' => 'devicon-bitbucket-original colored',  'level' => 'intermediate'],
+                    ['name' => 'Docker',     'icon' => 'devicon-docker-plain colored',     'level' => 'intermediate'],
+                    ['name' => 'VS Code',    'icon' => 'devicon-vscode-plain colored',     'level' => 'advanced'],
+                    ['name' => 'Visual Studio',    'icon' => ' devicon-visualstudio-plain colored',     'level' => 'intermediate'],
+                    ['name' => 'Android Studio',       'icon' => 'devicon-androidstudio-plain colored',        'level' => 'intermediate'],
+                    ['name' => 'Arduino',       'icon' => 'devicon-arduino-plain',        'level' => 'intermediate'],
+
+                    ['name' => 'Bash',       'icon' => 'devicon-bash-plain',        'level' => 'intermediate'],
+                    ['name' => 'Postman',       'icon' => 'devicon-postman-plain colored',        'level' => 'intermediate'],
+
+                    ['name' => 'Azure',       'icon' => 'devicon-azure-plain colored',        'level' => 'basic'],
+                    ['name' => 'AWS',       'icon' => 'devicon-amazonwebservices-plain-wordmark colored',        'level' => 'basic'],
+
+                    ['name' => 'pgAdmin',       'icon' => 'devicon-postgresql-plain colored',        'level' => 'intermediate'],
+                    ['name' => 'Apache',       'icon' => 'devicon-apache-plain colored',        'level' => 'intermediate'],
+
+                    ['name' => 'Figma',       'icon' => 'devicon-figma-plain colored',        'level' => 'intermediate'],
+                    ['name' => 'Adobe XD',       'icon' => 'devicon-xd-plain',        'level' => 'intermediate'],
+
+                    ['name' => 'Hyper-V',       'icon' => 'devicon-hyperv-plain colored',        'level' => 'intermediate'],
+                    ['name' => 'JSON',       'icon' => 'devicon-json-plain colored',        'level' => 'intermediate'],
+                    ['name' => 'LaTex',       'icon' => 'devicon-latex-original ',        'level' => 'intermediate'],
+                    ['name' => 'MariaDB',       'icon' => 'devicon-mariadb-plain colored',        'level' => 'intermediate'],
+
+                    ['name' => 'MongoDB',       'icon' => 'devicon-mongodb-plain colored',        'level' => 'intermediate'],
+
+
+
+
+                    ['name' => 'Windows',       'icon' => 'devicon-windows11-original colored',        'level' => 'intermediate'],
+                    ['name' => 'Linux',       'icon' => 'devicon-linux-plain',        'level' => 'intermediate'],
+                    ['name' => 'MacOS',       'icon' => 'devicon-apple-original',        'level' => 'intermediate'],
+                    ['name' => 'Android',       'icon' => 'devicon-android-plain colored',        'level' => 'intermediate'],
+                    ['name' => 'IOS',       'icon' => 'devicon-apple-original',        'level' => 'intermediate'],
+
+
+                    ['name' => 'pandas',       'icon' => 'devicon-pandas-plain',        'level' => 'intermediate'],
+                    ['name' => 'numpy',       'icon' => 'devicon-numpy-plain colored',        'level' => 'intermediate'],
+                    ['name' => 'open CV',       'icon' => 'devicon-opencv-plain colored',        'level' => 'intermediate'],
+
+
                 ];
                 @endphp
 
@@ -139,7 +208,8 @@
 
                 {{-- Bases de datos --}}
                 <p class="tech-group-label">{{ __('portfolio.tech.databases') }}</p>
-                <div class="tech-grid" aria-label="{{ __('portfolio.tech.databases') }}">
+                <div class="tech-grid" style="margin-bottom: var(--space-8);"
+                    aria-label="{{ __('portfolio.tech.databases') }}">
                     @foreach($databases as $db)
                     <div class="tech-item anim-ready">
                         <i class="{{ $db['icon'] }}" aria-hidden="true"></i>
@@ -150,6 +220,21 @@
                     </div>
                     @endforeach
                 </div>
+
+                {{-- devTools --}}
+                <p class="tech-group-label">{{ __('portfolio.tech.devtools') }}</p>
+                <div class="tech-grid" aria-label="{{ __('portfolio.tech.devtools') }}">
+                    @foreach($devTools as $tool)
+                    <div class="tech-item anim-ready">
+                        <i class="{{ $tool['icon'] }}" aria-hidden="true"></i>
+                        <span class="tech-item__name">{{ $tool['name'] }}</span>
+                        <span class="tech-item__level tech-item__level--{{ $tool['level'] }}">
+                            {{ $levels[$tool['level']] }}
+                        </span>
+                    </div>
+                    @endforeach
+                </div>
+
             </div>
 
             {{-- -------------------------------------------------------

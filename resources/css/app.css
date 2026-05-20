@@ -25,7 +25,8 @@
  * 19.  Responsive — Tablets y móviles
  * 20.  Utilidades
  */
-
+ /* bootstrap icons */
+@import "bootstrap-icons/font/bootstrap-icons.css";
 
 /* =============================================================
    1. VARIABLES CSS — Sistema de diseño centralizado
@@ -39,12 +40,12 @@
     --color-bg-card:      #16161e;
     --color-bg-glass:     rgba(22, 22, 30, 0.80);
     --color-border:       rgba(255, 255, 255, 0.07);
-    --color-border-hover:rgba(255, 80, 80, 0.35);
+    --color-border-hover:rgba(46, 114, 252, 0.35);
 
-    /* Colores de acento - dorado ambar */
-    --color-accent:      #dc3545;
-    --color-accent-dim:  rgba(245, 35, 35, 0.15);
-    --color-accent-glow: rgba(245, 35, 35, 0.3);
+    /* Colores de acento #2e72fc */
+    --color-accent:      rgb(58, 122, 250);
+    --color-accent-dim:  rgba(46, 114, 252, 0.15);
+    --color-accent-glow: rgba(46, 114, 252, 0.3);
 
     /* Texto */
     --color-text:         #e8e8f0;
@@ -589,7 +590,6 @@ button {
     font-size: var(--text-base);
     color: var(--color-text-muted);
     line-height: 1.8;
-    max-width: 600px;
     margin-bottom: var(--space-10);
 }
 
@@ -1359,7 +1359,7 @@ button {
     background: var(--color-bg-card);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    padding: var(--space-6);
+    padding: var(--space-4);
     display: flex;
     align-items: flex-start;
     gap: var(--space-4);

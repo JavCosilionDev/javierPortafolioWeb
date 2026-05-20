@@ -47,7 +47,16 @@ return [
         'scroll_hint'   => 'Desliza para explorar',
         'cta_projects'  => 'Ver Proyectos',
         'cta_contact'   => 'Contacto',
-        'summary'       => 'Ingeniero en Software con más de 3 años de experiencia en diseño, desarrollo, implementación y mejora de aplicaciones web. He trabajado como desarrollador Full Stack en empresas privadas y públicas, desarrollando sistemas de administración académica y gestión de recursos. Me desempeño con metodologías ágiles (SCRUM) y patrón MVC.',
+        'summary'       => 'Ingeniero de Software con experiencia sólida en el diseño, desarrollo e implementación de aplicaciones web y móviles escalables,
+        trabajando tanto en el sector público como en el privado. A lo largo de mi carrera, he participado en todas las fases del ciclo de vida del desarrollo:
+        levantamiento de requerimientos, diseño de interfaces y experiencia de usuario, modelado y optimización de bases de datos, creación de consultas SQL
+        avanzadas, desarrollo e integración de APIs, y generación de reportes automatizados. Trabajo principalmente con PHP (Laravel), Python (Django),
+        JavaScript, Dart (Flutter) y Node.js con TypeScript (NestJS), aplicando buenas prácticas como arquitectura MVC y metodologías ágiles (Scrum),
+        además de un manejo riguroso de control de versiones con Git. Además de mi experiencia profesional construyendo plataformas de gestión académica y
+        de recursos, me mantengo actualizado mediante proyectos personales donde desarrollo ecosistemas full-stack completos, incluyendo dashboards con
+        autenticación JWT y visualización dinámica de datos. Soy un profesional de aprendizaje rápido, con autonomía para liderar funcionalidades y
+        mantener sistemas en producción, y con una clara orientación a la mejora continua y al trabajo en equipo. Busco una posición donde pueda aportar
+        valor desde el primer día y seguir creciendo técnicamente.',
     ],
 
     // -------------------------------------------------------------------
@@ -59,6 +68,7 @@ return [
         'languages'   => 'Lenguajes de Programación',
         'frameworks'  => 'Frameworks',
         'databases'   => 'Bases de Datos',
+        'devtools'    => 'Herramientas de Desarrollo',
         'level' => [
             'advanced'     => 'Avanzado',
             'intermediate' => 'Intermedio',

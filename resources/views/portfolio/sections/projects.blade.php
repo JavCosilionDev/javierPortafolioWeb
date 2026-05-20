@@ -50,31 +50,31 @@
 
             @foreach($projects as $project)
 
-                @if($project->type === 'featured')
+                @if($project['type'] === 'featured')
                 {{-- ---- Plantilla 1: Featured (tarjeta destacada grande) ---- --}}
                 <article class="project-featured anim-ready"
-                         data-category="{{ $project->category }}"
+                         data-category="{{ $project['category'] }}"
                          role="listitem"
-                         aria-label="{{ $project->{'title_' . $locale} }}">
+                         aria-label="{{ $project['title_' . $locale] }}">
                     <div>
                         <p class="project-featured__tag">
                             <i class="bx bxs-star" aria-hidden="true"></i>
                             {{ __('portfolio.projects.featured') }}
                         </p>
                         <h3 class="project-featured__title">
-                            {{ $project->{'title_' . $locale} }}
+                            {{ $project['title_' . $locale] }}
                         </h3>
                         <p class="project-featured__desc">
-                            {{ $project->{'description_' . $locale} }}
+                            {{ $project['description_' . $locale] }}
                         </p>
                         <div class="tech-tags" aria-label="Tecnologias">
-                            @foreach($project->technologies as $tech)
+                            @foreach($project['technologies'] as $tech)
                             <span class="tech-tag">{{ $tech }}</span>
                             @endforeach
                         </div>
                         <div class="project-actions">
-                            @if($project->url)
-                            <a href="{{ $project->url }}" target="_blank" rel="noopener noreferrer"
+                            @if($project['url'])
+                            <a href="{{ $project['url'] }}" target="_blank" rel="noopener noreferrer"
                                class="btn btn--primary btn--sm"
                                aria-label="{{ __('portfolio.projects.view_demo') }}">
                                 <i class="bx bx-link-external" aria-hidden="true"></i>
@@ -87,8 +87,8 @@
                             </span>
                             @endif
 
-                            @if($project->github_url)
-                            <a href="{{ $project->github_url }}" target="_blank" rel="noopener noreferrer"
+                            @if($project['github_url'])
+                            <a href="{{ $project['github_url'] }}" target="_blank" rel="noopener noreferrer"
                                class="btn btn--outline btn--sm"
                                aria-label="{{ __('portfolio.projects.view_code') }}">
                                 <i class="bx bxl-github" aria-hidden="true"></i>
@@ -99,7 +99,7 @@
                     </div>
                     <div class="project-featured__meta">
                         @php
-                        $statusClass = match($project->status_en) {
+                        $statusClass = match($project['status_en']) {
                             'Production'       => 'prod',
                             'Personal Project' => 'personal',
                             default            => 'completed',
@@ -107,35 +107,35 @@
                         @endphp
                         <span class="project-status project-status--{{ $statusClass }}">
                             <span class="project-status__dot" aria-hidden="true"></span>
-                            {{ $project->{'status_' . $locale} }}
+                            {{ $project['status_' . $locale] }}
                         </span>
-                        @if($project->period)
+                        @if($project['period'])
                         <p style="font-size: var(--text-xs); color: var(--color-text-muted);">
                             <i class="bx bx-calendar" aria-hidden="true"></i>
-                            {{ $project->period }}
+                            {{ $project['period'] }}
                         </p>
                         @endif
-                        @if($project->company)
+                        @if($project['company'])
                         <p style="font-size: var(--text-xs); color: var(--color-text-muted);">
                             <i class="bx bx-buildings" aria-hidden="true"></i>
-                            {{ $project->company }}
+                            {{ $project['company'] }}
                         </p>
                         @endif
                     </div>
                 </article>
 
-                @elseif($project->type === 'card')
+                @elseif($project['type'] === 'card')
                 {{-- ---- Plantilla 2: Card normal (grid) ---- --}}
                 <article class="project-card anim-ready"
-                         data-category="{{ $project->category }}"
+                         data-category="{{ $project['category'] }}"
                          role="listitem"
-                         aria-label="{{ $project->{'title_' . $locale} }}">
+                         aria-label="{{ $project['title_' . $locale] }}">
                     <div class="project-card__header">
                         <span class="project-card__category">
-                            {{ __('portfolio.projects.' . $project->category) }}
+                            {{ __('portfolio.projects.' . $project['category']) }}
                         </span>
                         @php
-                        $statusClass = match($project->status_en) {
+                        $statusClass = match($project['status_en']) {
                             'Production'       => 'prod',
                             'Personal Project' => 'personal',
                             default            => 'completed',
@@ -143,50 +143,50 @@
                         @endphp
                         <span class="project-status project-status--{{ $statusClass }}">
                             <span class="project-status__dot" aria-hidden="true"></span>
-                            {{ $project->{'status_' . $locale} }}
+                            {{ $project['status_' . $locale] }}
                         </span>
                     </div>
-                    <h3 class="project-card__title">{{ $project->{'title_' . $locale} }}</h3>
-                    <p class="project-card__desc">{{ $project->{'description_' . $locale} }}</p>
+                    <h3 class="project-card__title">{{ $project['title_' . $locale] }}</h3>
+                    <p class="project-card__desc">{{ $project['description_' . $locale] }}</p>
                     <div class="tech-tags" aria-label="Tecnologias">
-                        @foreach($project->technologies as $tech)
+                        @foreach($project['technologies'] as $tech)
                         <span class="tech-tag">{{ $tech }}</span>
                         @endforeach
                     </div>
-                    @if($project->period || $project->company)
+                    @if($project['period'] || $project['company'])
                     <p style="font-size: var(--text-xs); color: var(--color-text-muted); display: flex; gap: var(--space-4);">
-                        @if($project->period)
+                        @if($project['period'])
                         <span>
                             <i class="bx bx-calendar" aria-hidden="true"></i>
-                            {{ $project->period }}
+                            {{ $project['period'] }}
                         </span>
                         @endif
-                        @if($project->company)
+                        @if($project['company'])
                         <span>
                             <i class="bx bx-buildings" aria-hidden="true"></i>
-                            {{ $project->company }}
+                            {{ $project['company'] }}
                         </span>
                         @endif
                     </p>
                     @endif
                     <div class="project-actions">
-                        @if($project->url)
-                        <a href="{{ $project->url }}" target="_blank" rel="noopener noreferrer"
+                        @if($project['url'])
+                        <a href="{{ $project['url'] }}" target="_blank" rel="noopener noreferrer"
                            class="btn btn--primary btn--sm"
                            aria-label="{{ __('portfolio.projects.view_demo') }}">
                             <i class="bx bx-link-external" aria-hidden="true"></i>
                             {{ __('portfolio.projects.view_demo') }}
                         </a>
                         @endif
-                        @if($project->github_url)
-                        <a href="{{ $project->github_url }}" target="_blank" rel="noopener noreferrer"
+                        @if($project['github_url'])
+                        <a href="{{ $project['github_url'] }}" target="_blank" rel="noopener noreferrer"
                            class="btn btn--outline btn--sm"
                            aria-label="{{ __('portfolio.projects.view_code') }}">
                             <i class="bx bxl-github" aria-hidden="true"></i>
                             {{ __('portfolio.projects.view_code') }}
                         </a>
                         @endif
-                        @if(!$project->url && !$project->github_url)
+                        @if(!$project['url'] && !$project['github_url'])
                         <span class="btn btn--outline btn--sm" style="cursor: default; opacity: 0.6;">
                             <i class="bx bx-lock" aria-hidden="true"></i>
                             {{ __('portfolio.projects.no_url') }}
@@ -195,9 +195,8 @@
                     </div>
                 </article>
 
-                @elseif($project->type === 'timeline')
+                @elseif($project['type'] === 'timeline')
                 {{-- ---- Plantilla 3: Timeline ---- --}}
-                {{-- El contenedor se abre solo una vez con el primer item --}}
                 @if(!$timelineRendered)
                 @php $timelineRendered = true; @endphp
                 <div class="project-timeline-wrap anim-ready">
@@ -208,34 +207,34 @@
                 @endif
 
                         <article class="timeline-project"
-                                 data-category="{{ $project->category }}"
+                                 data-category="{{ $project['category'] }}"
                                  role="listitem"
-                                 aria-label="{{ $project->{'title_' . $locale} }}">
+                                 aria-label="{{ $project['title_' . $locale] }}">
                             <div class="timeline-project__header">
                                 <h3 class="timeline-project__title">
-                                    {{ $project->{'title_' . $locale} }}
+                                    {{ $project['title_' . $locale] }}
                                 </h3>
-                                @if($project->period)
-                                <span class="timeline-project__period">{{ $project->period }}</span>
+                                @if($project['period'])
+                                <span class="timeline-project__period">{{ $project['period'] }}</span>
                                 @endif
                             </div>
-                            @if($project->company)
+                            @if($project['company'])
                             <p class="timeline-project__company">
                                 <i class="bx bx-buildings" aria-hidden="true"></i>
-                                {{ $project->company }}
+                                {{ $project['company'] }}
                             </p>
                             @endif
                             <p class="timeline-project__desc">
-                                {{ $project->{'description_' . $locale} }}
+                                {{ $project['description_' . $locale] }}
                             </p>
                             <div class="tech-tags" style="margin-top: var(--space-3);">
-                                @foreach($project->technologies as $tech)
+                                @foreach($project['technologies'] as $tech)
                                 <span class="tech-tag">{{ $tech }}</span>
                                 @endforeach
                             </div>
-                            @if($project->url)
+                            @if($project['url'])
                             <div style="margin-top: var(--space-3);">
-                                <a href="{{ $project->url }}" target="_blank" rel="noopener noreferrer"
+                                <a href="{{ $project['url'] }}" target="_blank" rel="noopener noreferrer"
                                    class="btn btn--outline btn--sm"
                                    aria-label="{{ __('portfolio.projects.view_demo') }}">
                                     <i class="bx bx-link-external" aria-hidden="true"></i>
@@ -245,11 +244,10 @@
                             @endif
                         </article>
 
-                @endif {{-- /project->type --}}
+                @endif
 
             @endforeach
 
-            {{-- Cierra el contenedor timeline si fue abierto --}}
             @if($timelineRendered)
                     </div>{{-- /timeline-list --}}
                 </div>{{-- /project-timeline-wrap --}}

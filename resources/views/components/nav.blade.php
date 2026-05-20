@@ -15,17 +15,18 @@
     <ul class="nav__links" role="list">
         <li>
             <span class="nav__link active" data-page="0" role="button" tabindex="0">
-                {{ __('portfolio.nav.home') }}
+                <i class="bi bi-house-fill"></i> {{ __('portfolio.nav.home') }}
             </span>
         </li>
         <li>
             <span class="nav__link" data-page="1" role="button" tabindex="0">
-                {{ __('portfolio.nav.projects') }}
+                <!-- <i class="bi bi-person-workspace"></i> {{ __('portfolio.nav.projects') }} -->
+                <i class="bi bi-person-rolodex"></i> {{ __('portfolio.nav.projects') }}
             </span>
         </li>
         <li>
             <span class="nav__link" data-page="2" role="button" tabindex="0">
-                {{ __('portfolio.nav.contact') }}
+                <i class="bi bi-chat-right-text-fill"></i> {{ __('portfolio.nav.contact') }}
             </span>
         </li>
     </ul>

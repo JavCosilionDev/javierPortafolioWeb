@@ -47,7 +47,13 @@ return [
         'scroll_hint'  => 'Slide to explore',
         'cta_projects' => 'View Projects',
         'cta_contact'  => 'Contact',
-        'summary'      => 'Software Engineer with over 3 years of experience in the design, development, implementation, and improvement of web applications. I have worked as a Full Stack developer in both private and public companies, building academic management and resource management systems. I work with agile methodologies (SCRUM) and MVC architecture.',
+        'summary'      => 'Seasoned Full Stack Engineer with a proven track record of delivering robust, scalable web and mobile solutions across both private and public sectors.
+        I bring hands-on expertise across the full development lifecycle—from requirements gathering and UI/UX design to database optimization, API development,
+        and automated reporting—using tech stacks like Laravel (PHP), Django (Python), Flutter (Dart), and NestJS (Node.js/TypeScript). Comfortable leading features
+        independently and maintaining production systems, I apply clean MVC architecture, Agile/Scrum workflows, and solid version control practices.
+        Beyond my professional work building academic management and resource platforms, I stay ahead of the curve by architecting full-stack ecosystems in
+        personal projects, including JWT-secured dashboards with dynamic data visualization. A fast learner and collaborative team player,
+        I’m ready to drive technical improvements and contribute immediate value while continuing to grow.',
     ],
 
     // -------------------------------------------------------------------
@@ -59,6 +65,7 @@ return [
         'languages'  => 'Programming Languages',
         'frameworks' => 'Frameworks',
         'databases'  => 'Databases',
+        'devtools' => 'Development Tools',
         'level' => [
             'advanced'     => 'Advanced',
             'intermediate' => 'Intermediate',
